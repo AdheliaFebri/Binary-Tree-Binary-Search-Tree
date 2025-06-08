@@ -1,0 +1,49 @@
+class Node {
+  int value;
+  Node? left;
+  Node? right;
+
+  Node(this.value);
+}
+
+class BST {
+  Node? root;
+
+  void insert(int value) {
+    root = _insertRecursively(root, value);
+  }
+
+  Node _insertRecursively(Node? node, int value) {
+    if (node == null) {
+      return Node(value);
+    }
+
+    if (value < node.value) {
+      node.left = _insertRecursively(node.left, value);
+    } else {
+      node.right = _insertRecursively(node.right, value);
+    }
+
+    return node;
+  }
+
+  int? first() {
+    if (root == null) return null;
+
+    Node current = root!;
+    while (current.left != null) {
+      current = current.left!;
+    }
+    return current.value;
+  }
+}
+
+void main() {
+  BST tree = BST();
+  tree.insert(10);
+  tree.insert(5);
+  tree.insert(15);
+  tree.insert(2);
+
+  print("Nilai terkecil dalam BST: ${tree.first()}"); // Output: 2
+}
