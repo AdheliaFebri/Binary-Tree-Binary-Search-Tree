@@ -1,0 +1,100 @@
+class TreeNode<T> {
+  T value;
+  TreeNode<T>? left;
+  TreeNode<T>? right;
+
+  TreeNode(this.value, [this.left, this.right]);
+}
+
+class BinaryTree<T> {
+  TreeNode<T>? root;
+
+  BinaryTree(this.root);
+
+  // Pre-order traversal: Root, Left, Right
+  void preOrder(TreeNode<T>? node) {
+    if (node == null) return;
+    print(node.value);
+    preOrder(node.left);
+    preOrder(node.right);
+  }
+
+  // In-order traversal: Left, Root, Right
+  void inOrder(TreeNode<T>? node) {
+    if (node == null) return;
+    inOrder(node.left);
+    print(node.value);
+    inOrder(node.right);
+  }
+
+  // Post-order traversal: Left, Right, Root
+  void postOrder(TreeNode<T>? node) {
+    if (node == null) return;
+    postOrder(node.left);
+    postOrder(node.right);
+    print(node.value);
+  }
+}
+
+BinaryTree<String> buildTreeCase1() {
+  var g = TreeNode('G');
+  var d = TreeNode('D', g);
+  var e = TreeNode('E');
+  var b = TreeNode('B', d, e);
+
+  var h = TreeNode('H');
+  var i = TreeNode('I');
+  var c = TreeNode('C', h, i);
+
+  var a = TreeNode('A', b, c);
+
+  return BinaryTree(a);
+}
+
+BinaryTree<String> buildTreeCase2() {
+  var g = TreeNode('G');
+  var h = TreeNode('H');
+  var i = TreeNode('I');
+
+  var d = TreeNode('D', g, h);
+  var e = TreeNode('E', null, i);
+  var b = TreeNode('B', d, e);
+
+  var f = TreeNode('F');
+  var c = TreeNode('C', f, null);
+
+  var a = TreeNode('A', b, c);
+
+  return BinaryTree(a);
+}
+
+BinaryTree<String> buildExpressionTree() {
+  var a = TreeNode('a');
+  var b = TreeNode('b');
+  var mul = TreeNode('*', a, b);
+
+  var c = TreeNode('c');
+  var d = TreeNode('d');
+  var sub = TreeNode('-', c, d);
+
+  var e = TreeNode('e');
+  var div = TreeNode('/', sub, e);
+
+  var plus = TreeNode('+', mul, div);
+
+  return BinaryTree(plus);
+}
+
+void main() {
+  var tree1 = buildTreeCase1();
+  print('In-order Case 1:');
+  tree1.inOrder(tree1.root);
+
+  var tree2 = buildTreeCase2();
+  print('\nIn-order Case 2:');
+  tree2.inOrder(tree2.root);
+
+  var exprTree = buildExpressionTree();
+  print('\nIn-order Expression Tree (Case 3):');
+  exprTree.inOrder(exprTree.root);
+}
